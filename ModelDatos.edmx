@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="apgModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Permiso">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreEmpleado" Type="varchar" MaxLength="250" />
+          <Property Name="ApellidosEmpleado" Type="varchar" MaxLength="250" />
+          <Property Name="TipoPermisoId" Type="int" />
+          <Property Name="FechaHoraInicioPermiso" Type="datetime" />
+          <Property Name="FechaHoraFinPermiso" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TipoPermiso">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <Association Name="FK_Permiso_TipoPermiso">
+          <End Role="TipoPermiso" Type="Self.TipoPermiso" Multiplicity="0..1" />
+          <End Role="Permiso" Type="Self.Permiso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoPermiso">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Permiso">
+              <PropertyRef Name="TipoPermisoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="dia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="fi" Type="varchar" Mode="In" />
+          <Parameter Name="ff" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="apgModelStoreContainer">
+          <EntitySet Name="Permiso" EntityType="Self.Permiso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoPermiso" EntityType="Self.TipoPermiso" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Permiso_TipoPermiso" Association="Self.FK_Permiso_TipoPermiso">
+            <End Role="TipoPermiso" EntitySet="TipoPermiso" />
+            <End Role="Permiso" EntitySet="Permiso" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="apgModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Permiso">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreEmpleado" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ApellidosEmpleado" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="TipoPermisoId" Type="Int32" />
+          <Property Name="FechaHoraInicioPermiso" Type="DateTime" Precision="3" />
+          <Property Name="FechaHoraFinPermiso" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TipoPermiso" Relationship="Self.FK_Permiso_TipoPermiso" FromRole="Permiso" ToRole="TipoPermiso" />
+        </EntityType>
+        <EntityType Name="TipoPermiso">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Permiso" Relationship="Self.FK_Permiso_TipoPermiso" FromRole="TipoPermiso" ToRole="Permiso" />
+        </EntityType>
+        <Association Name="FK_Permiso_TipoPermiso">
+          <End Role="TipoPermiso" Type="Self.TipoPermiso" Multiplicity="0..1" />
+          <End Role="Permiso" Type="Self.Permiso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoPermiso">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Permiso">
+              <PropertyRef Name="TipoPermisoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="apgEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Permiso" EntityType="Self.Permiso" />
+          <EntitySet Name="TipoPermiso" EntityType="Self.TipoPermiso" />
+          <AssociationSet Name="FK_Permiso_TipoPermiso" Association="Self.FK_Permiso_TipoPermiso">
+            <End Role="TipoPermiso" EntitySet="TipoPermiso" />
+            <End Role="Permiso" EntitySet="Permiso" />
+          </AssociationSet>
+          <FunctionImport Name="dia" ReturnType="Collection(Int32)">
+            <Parameter Name="fi" Mode="In" Type="String" />
+            <Parameter Name="ff" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="apgModelStoreContainer" CdmEntityContainer="apgEntities">
+          <EntitySetMapping Name="Permiso">
+            <EntityTypeMapping TypeName="apgModel.Permiso">
+              <MappingFragment StoreEntitySet="Permiso">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NombreEmpleado" ColumnName="NombreEmpleado" />
+                <ScalarProperty Name="ApellidosEmpleado" ColumnName="ApellidosEmpleado" />
+                <ScalarProperty Name="TipoPermisoId" ColumnName="TipoPermisoId" />
+                <ScalarProperty Name="FechaHoraInicioPermiso" ColumnName="FechaHoraInicioPermiso" />
+                <ScalarProperty Name="FechaHoraFinPermiso" ColumnName="FechaHoraFinPermiso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoPermiso">
+            <EntityTypeMapping TypeName="apgModel.TipoPermiso">
+              <MappingFragment StoreEntitySet="TipoPermiso">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="dia" FunctionName="apgModel.Store.dia" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

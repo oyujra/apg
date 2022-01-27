@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="apgModelStoreContainer" CdmEntityContainer="apgEntities">
+    <EntitySetMapping Name="Permiso">
+      <EntityTypeMapping TypeName="apgModel.Permiso">
+        <MappingFragment StoreEntitySet="Permiso">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="NombreEmpleado" ColumnName="NombreEmpleado" />
+          <ScalarProperty Name="ApellidosEmpleado" ColumnName="ApellidosEmpleado" />
+          <ScalarProperty Name="TipoPermisoId" ColumnName="TipoPermisoId" />
+          <ScalarProperty Name="FechaHoraInicioPermiso" ColumnName="FechaHoraInicioPermiso" />
+          <ScalarProperty Name="FechaHoraFinPermiso" ColumnName="FechaHoraFinPermiso" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TipoPermiso">
+      <EntityTypeMapping TypeName="apgModel.TipoPermiso">
+        <MappingFragment StoreEntitySet="TipoPermiso">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="dia" FunctionName="apgModel.Store.dia" />
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="apgModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Permiso">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NombreEmpleado" Type="varchar" MaxLength="250" />
+    <Property Name="ApellidosEmpleado" Type="varchar" MaxLength="250" />
+    <Property Name="TipoPermisoId" Type="int" />
+    <Property Name="FechaHoraInicioPermiso" Type="datetime" />
+    <Property Name="FechaHoraFinPermiso" Type="datetime" />
+  </EntityType>
+  <EntityType Name="TipoPermiso">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="250" />
+  </EntityType>
+  <Association Name="FK_Permiso_TipoPermiso">
+    <End Role="TipoPermiso" Type="Self.TipoPermiso" Multiplicity="0..1" />
+    <End Role="Permiso" Type="Self.Permiso" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoPermiso">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Permiso">
+        <PropertyRef Name="TipoPermisoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="dia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="fi" Type="varchar" Mode="In" />
+    <Parameter Name="ff" Type="varchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="apgModelStoreContainer">
+    <EntitySet Name="Permiso" EntityType="Self.Permiso" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TipoPermiso" EntityType="Self.TipoPermiso" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Permiso_TipoPermiso" Association="Self.FK_Permiso_TipoPermiso">
+      <End Role="TipoPermiso" EntitySet="TipoPermiso" />
+      <End Role="Permiso" EntitySet="Permiso" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

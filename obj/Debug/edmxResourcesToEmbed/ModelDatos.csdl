@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="apgModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Permiso">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NombreEmpleado" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="ApellidosEmpleado" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="TipoPermisoId" Type="Int32" />
+    <Property Name="FechaHoraInicioPermiso" Type="DateTime" Precision="3" />
+    <Property Name="FechaHoraFinPermiso" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="TipoPermiso" Relationship="Self.FK_Permiso_TipoPermiso" FromRole="Permiso" ToRole="TipoPermiso" />
+  </EntityType>
+  <EntityType Name="TipoPermiso">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Permiso" Relationship="Self.FK_Permiso_TipoPermiso" FromRole="TipoPermiso" ToRole="Permiso" />
+  </EntityType>
+  <Association Name="FK_Permiso_TipoPermiso">
+    <End Role="TipoPermiso" Type="Self.TipoPermiso" Multiplicity="0..1" />
+    <End Role="Permiso" Type="Self.Permiso" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoPermiso">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Permiso">
+        <PropertyRef Name="TipoPermisoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="apgEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Permiso" EntityType="Self.Permiso" />
+    <EntitySet Name="TipoPermiso" EntityType="Self.TipoPermiso" />
+    <AssociationSet Name="FK_Permiso_TipoPermiso" Association="Self.FK_Permiso_TipoPermiso">
+      <End Role="TipoPermiso" EntitySet="TipoPermiso" />
+      <End Role="Permiso" EntitySet="Permiso" />
+    </AssociationSet>
+    <FunctionImport Name="dia" ReturnType="Collection(Int32)">
+      <Parameter Name="fi" Mode="In" Type="String" />
+      <Parameter Name="ff" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+</Schema>
